@@ -1,23 +1,27 @@
 class Solution:
     def maxOperations(self, nums: List[int], k: int) -> int:
         counter = 0
-        
+        nums.sort()
+        # limit = len(nums)
+
+        # get rid of values that are too high -- its
+        # for i in range (len(nums)-1,-1,-1):
+        #     if nums[i] < k:
+        #         limit = i+1
+        #         break
+        # r = limit-1
+        # nums = nums[:limit]
+        r = len(nums)-1
         i = 0
 
-        checked_values = []
+        while i < r:
+            if nums[i] == k - nums[r]:
+                i += 1
+                r -= 1
+                counter += 1
+            elif nums[i] < k-nums[r]:
+                i += 1
+            else:
+                r -= 1
 
-        # try to solve it using count()
-        while i < len(nums):
-            if nums[i] in checked_values:
-                i += 1
-                continue
-            elif nums[i] == k/2:
-                counter += floor(nums.count(k/2)/2)
-                checked_values.append(nums[i])
-                i += 1
-                continue
-            counter += min(nums.count(nums[i]), nums.count(k-nums[i]))
-            checked_values.append(nums[i])
-            checked_values.append(k-nums[i])
-            i += 1
         return counter
