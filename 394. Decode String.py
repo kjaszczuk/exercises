@@ -1,19 +1,20 @@
 class Solution:
     def decodeString(self, s: str) -> str:
-# working only for simplest case without nested brackets
         encoded = ""
-        decoded = ""
-        mult = 0
+        mult = ""
+        stack = []
         for i in s:
             if i.isdigit():
-                mult = int(i)
-                continue
+                mult += i
             elif i.isalpha():
                 encoded += i
-            elif i == ']':
-                decoded += mult*encoded
+            elif i == '[':
+                stack.append(encoded)
+                stack.append(mult)
                 encoded = ""
-        return decoded
-
-
-
+                mult = ""
+            elif i == ']':
+                encoded = int(stack.pop()) * encoded
+                encoded = stack.pop() + encoded
+        return encoded
+# 100, 84
