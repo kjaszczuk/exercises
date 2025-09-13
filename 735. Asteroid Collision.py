@@ -1,4 +1,4 @@
-class Solution:
+"""class Solution:
     def asteroidCollision(self, asteroids: List[int]) -> List[int]:
         stack = []
         flag_append = False
@@ -22,5 +22,23 @@ class Solution:
                     break
                 if flag_append:
                     stack.append(i)
-        return stack
-# 94, 19
+        return stack"""
+# 94, 19 (when run second and third time: 18 97 wtf... totally different result, with the same code)
+
+# no idea why mine solution when run first time worked faster than this one, but this is much clearer:
+class Solution:
+    def asteroidCollision(self, asteroids: List[int]) -> List[int]:
+        s = []
+        for a in asteroids:
+            while s and s[-1] > 0 and a < 0:
+                if s[-1] < -a: 
+                    s.pop()
+                elif s[-1] > -a:
+                    break    
+                else:
+                    s.pop()
+                    break
+            else:
+                s.append(a)        
+        return s
+# 59, 61
