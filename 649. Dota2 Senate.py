@@ -1,9 +1,14 @@
 class Solution:
     def predictPartyVictory(self, senate: str) -> str:
         n = len(senate)
+        rad = []
+        dir = []
 
-        rad = [i for i in range (len(senate)) if senate[i] == 'R']
-        dir = [i for i in range (len(senate)) if senate[i] == 'D']
+        for i, c in enumerate(senate):
+            if c == 'R':
+                rad.append(i)
+            else:
+                dir.append(i)
         
         while rad and dir:
             r = rad.pop(0)
@@ -16,4 +21,4 @@ class Solution:
             return 'Radiant'
         else:
             return 'Dire'
-# 16, 19
+# 20, 7-34
