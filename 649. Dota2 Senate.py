@@ -1,8 +1,9 @@
+from collections import deque
 class Solution:
     def predictPartyVictory(self, senate: str) -> str:
         n = len(senate)
-        rad = []
-        dir = []
+        rad = deque()
+        dir = deque()
 
         for i, c in enumerate(senate):
             if c == 'R':
@@ -11,14 +12,11 @@ class Solution:
                 dir.append(i)
         
         while rad and dir:
-            r = rad.pop(0)
-            d = dir.pop(0)
+            r = rad.popleft()
+            d = dir.popleft()
             if r < d:
                 rad.append(n+r)
             else:
                 dir.append(n+d)
-        if rad:
-            return 'Radiant'
-        else:
-            return 'Dire'
-# 20, 7-34
+        return 'Radiant' if rad else 'Dire'
+# 69-97; 7-84
