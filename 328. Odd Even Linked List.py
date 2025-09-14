@@ -10,11 +10,11 @@ class Solution:
         odd = head
         even_head = head.next
         even = head.next
-        while odd.next and even.next:
-            odd.next = odd.next.next
+        while even and even.next:
+            odd.next = even.next
             odd = odd.next
             even.next = even.next.next
             even = even.next
         odd.next = even_head
         return head
-# 100, 46
+# 100, 94
