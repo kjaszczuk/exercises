@@ -1,29 +1,39 @@
 class Solution:
     def compress(self, chars: List[str]) -> int:
-        if chars == []:
-            return 0
-        s = [chars[0]]
-        counter = 0
-        reversed_counter = []
-        flag_append = False
-        for i in range (len(chars)):
-            if chars[i] == s[-1]:
-                counter += 1
-            if chars[i] != s[-1] or i == len(chars)-1:
-                if chars[i] != s[-1]:
-                    flag_append = True
-                if counter > 1:
-                    while counter != 0:
-                        reversed_counter.append(counter%10)
-                        counter //= 10
-                    for j in range (len(reversed_counter)-1, -1, -1):
-                        s.append(str(reversed_counter[j]))
-                    reversed_counter = []
-                counter = 1
-                if flag_append:
-                    s.append(chars[i])
-                    flag_append = False
-        for i in range (len(s)):
-            chars[i] = str(s[i])
-        return len(s)
-# 37, 6
+        # res: write pointer - where to write the next compressed character
+        res = 0
+        
+        # i: start pointer - marks the beginning of current group
+        i = 0
+        
+        # n: total length of input array
+        n = len(chars)
+
+        # j: read pointer - scans through the array
+        # Goes to n+1 to handle the last group (explained below)
+        for j in range(n + 1):
+            # Check if current group has ended
+            # Group ends when: 
+            # 1. We reach the end (j == n), OR
+            # 2. Current character differs from group start (chars[j] != chars[i])
+            if j == n or chars[j] != chars[i]:
+                # Write the character for this group
+                chars[res] = chars[i]
+                res += 1  # Move write pointer forward
+                
+                # Calculate how many characters were in this group
+                group_length = j - i
+                
+                # If group has more than 1 character, write the count
+                if group_length > 1:
+                    # Convert number to string to handle multi-digit counts
+                    # e.g., 12 becomes '1' and '2'
+                    for digit in str(group_length):
+                        chars[res] = digit
+                        res += 1  # Move write pointer for each digit
+                
+                # Move start pointer to beginning of next group
+                i = j
+        
+        # Return the length of compressed array
+        return res
