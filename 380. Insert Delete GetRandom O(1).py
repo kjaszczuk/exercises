@@ -3,26 +3,31 @@ class RandomizedSet:
 
     def __init__(self):
         self.lst = []
+        self.idx_map = {}
 
     def search(self, val):
-        return val in self.lst
+        return val in self.idx_map
 
     def insert(self, val: int) -> bool:
         if not self.search(val):
             self.lst.append(val)
+            self.idx_map[val] = len(self.lst)-1
             return True
         return False
 
     def remove(self, val: int) -> bool:
         if self.search(val):
-            self.lst.pop(val)
+            idx = self.idx_map[val]
+            self.lst[idx] = self.lst[-1] 
+            self.idx_map[self.lst[-1]] = idx
+            self.lst.pop()
+            del self.idx_map[val]
             return True
         return False
 
     def getRandom(self) -> int:
         return random.choice(self.lst)
-# doesn't work cause searching in list in O(n) not O(1) and list.pop() requires index as an argument not a value 
-
+# 68, 20
 
 
 # Your RandomizedSet object will be instantiated and called as such:
