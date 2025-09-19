@@ -1,22 +1,27 @@
 import random
 class RandomizedSet:
+
     def __init__(self):
-        self.Rset = set()
+        self.lst = []
+
+    def search(self, val):
+        return val in self.lst
 
     def insert(self, val: int) -> bool:
-        if val not in self.Rset:
-            self.Rset.add(val)
+        if not self.search(val):
+            self.lst.append(val)
             return True
         return False
 
     def remove(self, val: int) -> bool:
-        if val in self.Rset:
-            self.Rset.remove(val)
+        if self.search(val):
+            self.lst.pop(val)
             return True
         return False
 
     def getRandom(self) -> int:
-        random.choice(self.Rset) # WON'T WORK CAUSE choice argument has to be subscriptable (e.g. a list)
+        return random.choice(self.lst)
+# doesn't work cause searching in list in O(n) not O(1) and list.pop() requires index as an argument not a value 
 
 
 
